@@ -1,3 +1,5 @@
+import json
+
 from app.db.database_elastic import elastic_client
 
 
@@ -72,7 +74,7 @@ def get_all_documents():
     except Exception as e:
         print(f"Failed to retrieve documents: {e}")
         return []
-#print(get_all_documents())
+
 def search_news_documents(query):
     index_name = "news_events"
     try:

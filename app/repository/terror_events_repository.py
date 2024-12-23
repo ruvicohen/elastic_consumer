@@ -1,3 +1,5 @@
+from dataclasses import asdict
+
 from app.db.database_elastic import elastic_client
 
 def setup_index():
