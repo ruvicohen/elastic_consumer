@@ -9,12 +9,9 @@ load_dotenv(verbose=True)
 elastic_topic = os.environ["ELASTIC_TOPIC"]
 db_topic = os.environ["MONGO_TOPIC"]
 
-topics = [
-    os.environ["ELASTIC_TOPIC"],
-    os.environ["MONGO_TOPIC"]
-]
+topics = [os.environ["ELASTIC_TOPIC"], os.environ["MONGO_TOPIC"]]
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     setup_index()
     setup_index_for_json()
 

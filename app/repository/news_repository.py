@@ -1,5 +1,3 @@
-import json
-
 from app.db.database_elastic import elastic_client
 
 
@@ -19,21 +17,22 @@ def setup_index_for_json():
                         "country": {"type": "text"},
                         "region": {"type": "text"},
                         "latitude": {"type": "float"},
-                        "longitude": {"type": "float"}
+                        "longitude": {"type": "float"},
                     }
                 }
-            }
+            },
         )
         print(f"Index '{index_name}' created.")
     else:
         print(f"Index '{index_name}' already exists.")
+
 
 def is_document_similar(news_document, index_name="news_events"):
     query = {
         "bool": {
             "must": [
                 {"match": {"title": news_document["title"]}},
-                {"match": {"body": news_document["body"]}}
+                {"match": {"body": news_document["body"]}},
             ]
         }
     }
@@ -46,6 +45,7 @@ def is_document_similar(news_document, index_name="news_events"):
         print(f"Error checking for similar document: {e}")
         return False
 
+
 def insert_news_document(news_document):
     index_name = "news_events"
 
@@ -55,6 +55,7 @@ def insert_news_document(news_document):
     except Exception as e:
         print(f"Failed to insert document: {e}")
 
+
 def insert_news_document_if_unique(news_document):
     if is_document_similar(news_document):
         print("Similar document already exists. Skipping insertion.")
@@ -62,10 +63,13 @@ def insert_news_document_if_unique(news_document):
 
     return insert_news_document(news_document)
 
+
 def get_all_documents():
     index_name = "news_events"
     try:
-        response = elastic_client.search(index=index_name, body={"query": {"match_all": {}}}, size=10000)
+        response = elastic_client.search(
+            index=index_name, body={"query": {"match_all": {}}}, size=10000
+        )
         hits = response.get("hits", {}).get("hits", [])
         print(f"Found {len(hits)} documents:")
         for hit in hits:
@@ -74,6 +78,7 @@ def get_all_documents():
     except Exception as e:
         print(f"Failed to retrieve documents: {e}")
         return []
+
 
 def search_news_documents(query):
     index_name = "news_events"
@@ -88,12 +93,12 @@ def search_news_documents(query):
         print(f"Failed to search documents: {e}")
         return []
 
+
 def delete_all_documents():
     index_name = "news_events"
     try:
         response = elastic_client.delete_by_query(
-            index=index_name,
-            body={"query": {"match_all": {}}}
+            index=index_name, body={"query": {"match_all": {}}}
         )
         print(f"Deleted {response['deleted']} documents from index '{index_name}'.")
         return response

@@ -8,6 +8,7 @@ from app.repository.terror_events_repository import insert_terror_event
 from app.service.event_service import convert_to_mongo_compatible
 from app.service.validation_service import validate_event
 
+
 def custom_serializer(obj):
     if isinstance(obj, (Location, Casualties, Date)):
         return obj.__dict__
@@ -15,8 +16,9 @@ def custom_serializer(obj):
         return list(obj)  # Convert set to list
     raise TypeError(f"Type {type(obj)} not serializable")
 
+
 def handle_message(message, key):
-    key_str = key.decode('utf-8')
+    key_str = key.decode("utf-8")
     if key_str == "terror_event":
         event = convert_to_mongo_compatible(message)
         event = validate_event(event)

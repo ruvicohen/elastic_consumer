@@ -1,6 +1,7 @@
 from pydantic import ValidationError
 from app.db.model.event import Event
 
+
 def validate_event(value):
     try:
         event = Event(**value)
