@@ -97,6 +97,3 @@ def get_document_count():
     except Exception as e:
         print(f"Failed to retrieve document count: {e}")
         return 0
-
-
-print(get_document_count())

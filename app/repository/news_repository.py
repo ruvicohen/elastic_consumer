@@ -71,14 +71,10 @@ def get_all_documents():
             index=index_name, body={"query": {"match_all": {}}}, size=10000
         )
         hits = response.get("hits", {}).get("hits", [])
-        print(f"Found {len(hits)} documents:")
-        for hit in hits:
-            print(hit["_source"])
         return hits
     except Exception as e:
         print(f"Failed to retrieve documents: {e}")
         return []
-
 
 def search_news_documents(query):
     index_name = "news_events"
