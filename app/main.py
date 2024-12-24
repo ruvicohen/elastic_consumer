@@ -7,7 +7,7 @@ from app.service.handle_masseges import handle_message
 
 load_dotenv(verbose=True)
 elastic_topic = os.environ["ELASTIC_TOPIC"]
-db_topic = os.environ["MONGO_TOPIC"]
+db_topic = os.environ["DB_TOPIC"]
 
 topics = [os.environ["ELASTIC_TOPIC"], os.environ["MONGO_TOPIC"]]
 
